@@ -7,9 +7,6 @@ import lombok.Data;
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Stat {
-    public short getStat() {
-        return stat;
-    }
 
     @JsonProperty("base_stat")
     private short stat;

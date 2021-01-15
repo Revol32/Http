@@ -3,6 +3,7 @@ package com.epam.izh.rd.online.service;
 import com.epam.izh.rd.online.entity.Pokemon;
 import com.epam.izh.rd.online.factory.PokemonMapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.Data;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.BasicResponseHandler;
@@ -13,10 +14,10 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-
+@Data
 public class PokemonAPIService implements PokemonFetchingService {
 
-    private final String url = "https://pokeapi.co/api/v2/pokemon/";
+    private String url = "https://pokeapi.co/api/v2/pokemon/";
 
     @Override
     public Pokemon fetchByName(String name) throws IllegalArgumentException {
@@ -35,7 +36,7 @@ public class PokemonAPIService implements PokemonFetchingService {
     public byte[] getPokemonImage(String name) throws IllegalArgumentException {
         byte[] image;
         try {
-            String imageUrl = new PokemonMapper().getObjectMapper().readTree(getHttpResponseAsString(name)).get("sprites").get("front_default").toString().replace("\"", "");
+            String imageUrl = new PokemonMapper().getObjectMapper().readTree(getHttpResponseAsString(name)).get("sprites").get("front_default").asText();
             URL urlImage = new URL(imageUrl);
             HttpURLConnection connection = (HttpURLConnection) urlImage.openConnection();
             connection.setRequestMethod("GET");

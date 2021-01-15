@@ -11,36 +11,41 @@ import java.io.IOException;
 public class PokemonFightService implements PokemonFightingClubService {
 
     PokemonAPIService pokemonAPIService = new PokemonAPIService();
+    String p1id = "", p2id = "";
 
     @Override
     public Pokemon doBattle(Pokemon p1, Pokemon p2) {
-        System.out.println("Начинается бой между покемонами " + p1.getPokemonName() + " и " + p2.getPokemonName());
+        if (p1.getPokemonName().equals(p2.getPokemonName())){
+            p1id = "1";
+            p2id = "2";
+        }
+        System.out.println("Начинается бой между покемонами " + p1.getPokemonName() +p1id+ " и " + p2.getPokemonName()+p2id);
         if (p1.getPokemonId() > p2.getPokemonId()) {
             System.out.println("Первый ход за " + p1.getPokemonName());
             while (true) {
                 doDamage(p1, p2);
                 if (p2.getHp() <= 0) {
-                    System.out.println("Побеждает покемон " + p1.getPokemonName());
+                    System.out.println("Побеждает покемон " + p1.getPokemonName()+p1id);
                     return p1;
                 } else {
                     doDamage(p2, p1);
                     if (p1.getHp() <= 0) {
-                        System.out.println("Побеждает покемон " + p2.getPokemonName());
+                        System.out.println("Побеждает покемон " + p2.getPokemonName()+p2id);
                         return p2;
                     }
                 }
             }
         } else {
-            System.out.println("Первый ход за " + p2.getPokemonName());
+            System.out.println("Первый ход за " + p2.getPokemonName()+p2id);
             while (true) {
                 doDamage(p2, p1);
                 if (p1.getHp() <= 0) {
-                    System.out.println("Побеждает покемон " + p2.getPokemonName());
+                    System.out.println("Побеждает покемон " + p2.getPokemonName()+p2id);
                     return p2;
                 } else {
                     doDamage(p1, p2);
                     if (p2.getHp() <= 0) {
-                        System.out.println("Побеждает покемон " + p1.getPokemonName());
+                        System.out.println("Побеждает покемон " + p1.getPokemonName()+p1id);
                         return p1;
                     }
                 }
